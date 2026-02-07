@@ -1,6 +1,5 @@
 package com.hebertzin.security_service.services;
-
-import com.hebertzin.security_service.exceptions.UserAlreadyExist;
+import com.hebertzin.security_service.exceptions.ConflictException;
 import com.hebertzin.security_service.presentation.CreateUserRequest;
 import com.hebertzin.security_service.repository.UserRepository;
 import com.hebertzin.security_service.repository.entities.User;
@@ -23,7 +22,7 @@ public class UserService {
         boolean existentUser = this.repo.existsByEmail(user.getEmail());
 
         if (existentUser) {
-          throw  new UserAlreadyExist("User Already exist");
+          throw  new ConflictException("User already exist");
         };
 
          user.setPassword(passwordEnconder.encode(user.getPassword()));

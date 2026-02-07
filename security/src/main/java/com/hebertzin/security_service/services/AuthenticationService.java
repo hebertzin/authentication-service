@@ -1,8 +1,6 @@
 package com.hebertzin.security_service.services;
-
-
 import com.hebertzin.security_service.exceptions.InvalidCredentials;
-import com.hebertzin.security_service.exceptions.UserNotFound;
+import com.hebertzin.security_service.exceptions.NotFoundException;
 import com.hebertzin.security_service.repository.UserRepository;
 import com.hebertzin.security_service.repository.entities.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +25,7 @@ public class AuthenticationService {
         boolean existentUser = this.userRepository.existsByEmail(email);
 
         if (!existentUser) {
-            throw new UserNotFound("User not found");
+            throw new NotFoundException("User not found");
         }
 
         boolean isCorrectCredentials = this.passwordEncoder.matches(password, user.get().getPassword());
