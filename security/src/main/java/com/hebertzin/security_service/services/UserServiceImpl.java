@@ -1,4 +1,5 @@
 package com.hebertzin.security_service.services;
+import com.hebertzin.security_service.domain.UserService;
 import com.hebertzin.security_service.exceptions.ConflictException;
 import com.hebertzin.security_service.presentation.CreateUserRequest;
 import com.hebertzin.security_service.repository.UserRepository;
@@ -7,16 +8,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
-    private final UserRepository repo;
-    private final PasswordEncoder passwordEnconder;
+public class UserServiceImpl implements UserService {
 
-    public UserService(UserRepository repo, PasswordEncoder passwordEnconder) {
+    private final UserRepository repo;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository repo, PasswordEncoder passwordEncoder) {
         this.repo = repo;
-        this.passwordEnconder = passwordEnconder;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public  User save(CreateUserRequest request) {
+    public User save(CreateUserRequest request) {
         User user = new User(request.name(), request.email(), request.password());
 
         boolean existentUser = this.repo.existsByEmail(user.getEmail());
@@ -25,7 +27,7 @@ public class UserService {
           throw  new ConflictException("User already exist");
         };
 
-         user.setPassword(passwordEnconder.encode(user.getPassword()));
+         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
          return this.repo.save(user);
     }

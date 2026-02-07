@@ -1,4 +1,5 @@
 package com.hebertzin.security_service.services;
+import com.hebertzin.security_service.domain.AuthenticationService;
 import com.hebertzin.security_service.domain.TokenProvider;
 import com.hebertzin.security_service.exceptions.InvalidCredentials;
 import com.hebertzin.security_service.exceptions.NotFoundException;
@@ -10,13 +11,15 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
+    public AuthenticationServiceImpl(UserRepository userRepository,
+                                     PasswordEncoder passwordEncoder,
+                                     TokenProvider tokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;

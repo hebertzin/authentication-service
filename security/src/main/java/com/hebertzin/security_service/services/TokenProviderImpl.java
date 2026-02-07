@@ -1,21 +1,22 @@
-package com.hebertzin.security_service.config;
+package com.hebertzin.security_service.services;
+
+import com.hebertzin.security_service.domain.TokenProvider;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Service
-public class TokenProvider {
+public class TokenProviderImpl implements TokenProvider {
 
     private  final SecretKey secret;
     private final String issuer;
     private final Long expirationMinutes;
 
-    public TokenProvider(
+    public TokenProviderImpl(
             @Value("${app.jwt.secret}") SecretKey secret,
             @Value("${app.jwt.issuer}") String issuer,
             @Value("${app.jwt.expirationInMinutes}") Long expirationMinutes) {
