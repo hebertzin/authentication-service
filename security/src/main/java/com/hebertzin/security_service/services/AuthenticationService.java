@@ -1,10 +1,9 @@
 package com.hebertzin.security_service.services;
-import com.hebertzin.security_service.config.TokenProvider;
+import com.hebertzin.security_service.domain.TokenProvider;
 import com.hebertzin.security_service.exceptions.InvalidCredentials;
 import com.hebertzin.security_service.exceptions.NotFoundException;
 import com.hebertzin.security_service.repository.UserRepository;
 import com.hebertzin.security_service.repository.entities.User;
-import org.hibernate.mapping.Any;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
