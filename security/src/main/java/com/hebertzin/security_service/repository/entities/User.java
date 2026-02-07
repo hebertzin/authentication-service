@@ -1,16 +1,16 @@
 package com.hebertzin.security_service.repository.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id()
-    String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID id;
     @Column(name = "name", nullable = false)
     String name;
 
@@ -21,13 +21,19 @@ public class User {
     String password;
 
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Device> devices;
+
+    protected User () {
+
+    }
     public User (String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    public  String getId() {
+    public  UUID getId() {
         return  this.id;
     }
 
