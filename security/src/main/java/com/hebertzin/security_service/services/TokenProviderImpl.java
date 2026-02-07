@@ -1,6 +1,9 @@
 package com.hebertzin.security_service.services;
 
 import com.hebertzin.security_service.domain.TokenProvider;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,4 +40,17 @@ public class TokenProviderImpl implements TokenProvider {
                 .compact();
     }
 
+
+    public Jws<Claims> parseAndValidate(String token) throws JwtException {
+        return Jwts.parser()
+                .verifyWith(secret)
+                .requireIssuer(issuer)
+                .build()
+                .parseSignedClaims(token);
+    }
+
+
+    public String extracSubject(String token) {
+        return parseAndValidate(token).getPayload().getSubject();
+    }
 }
