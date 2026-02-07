@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
@@ -20,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<String> post(@RequestBody CreateUserRequest body) {
+    ResponseEntity<UUID> post(@RequestBody CreateUserRequest body) {
             User saved = this.userService.save(body);
             return ResponseEntity.status(HttpStatus.CREATED).body(saved.getId());
     }
