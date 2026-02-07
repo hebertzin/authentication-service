@@ -1,8 +1,10 @@
 package com.hebertzin.security_service.services;
+import com.hebertzin.security_service.config.TokenProvider;
 import com.hebertzin.security_service.exceptions.InvalidCredentials;
 import com.hebertzin.security_service.exceptions.NotFoundException;
 import com.hebertzin.security_service.repository.UserRepository;
 import com.hebertzin.security_service.repository.entities.User;
+import org.hibernate.mapping.Any;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +15,15 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenProvider tokenProvider;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.tokenProvider = tokenProvider;
     }
 
-    public void authenticate(String email, String password) {
+    public String authenticate(String email, String password) {
         Optional<User> user = this.userRepository.findByEmail(email);
 
         boolean existentUser = this.userRepository.existsByEmail(email);
@@ -34,6 +38,7 @@ public class AuthenticationService {
             throw  new InvalidCredentials("Credential are invalids");
         }
 
+         return this.tokenProvider.generateToken(user.get().getEmail());
      }
 
 }
