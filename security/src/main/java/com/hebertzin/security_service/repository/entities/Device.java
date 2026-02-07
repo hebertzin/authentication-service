@@ -25,11 +25,15 @@ public class Device {
     @Column(name = "ip_last", nullable = false)
     private String ipLast;
 
+    @Column(name = "trust_level", nullable = false)
+    private String trust_level;
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    protected Device() {
+    public Device() {
     }
 
     public Device(
@@ -38,6 +42,7 @@ public class Device {
             String userAgent,
             String ipFirst,
             String ipLast,
+            String trustLevel,
             User user
     ) {
         this.deviceType = deviceType;
@@ -45,7 +50,9 @@ public class Device {
         this.userAgent = userAgent;
         this.ipFirst = ipFirst;
         this.ipLast = ipLast;
+        this.trust_level = trustLevel;
         this.user = user;
+
     }
 
     public UUID getId() { return id; }
@@ -76,5 +83,9 @@ public class Device {
 
     public void setLastIp(String ipLast) {
         this.ipLast = ipLast;
+    }
+
+    public void setTrustLevel(String trustLevel) {
+        this.trust_level = trustLevel;
     }
 }
