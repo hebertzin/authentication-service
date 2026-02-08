@@ -1,5 +1,6 @@
 package com.hebertzin.security_service.repository.entities;
 
+import com.hebertzin.security_service.presentation.LoginResult;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class LoginAttempt {
     private UUID deviceId;
 
     @Column(nullable = false, length = 20)
-    private String result;
+    private LoginResult result;
 
     @Column(length = 45)
     private String ip;
@@ -37,7 +38,7 @@ public class LoginAttempt {
             String email,
             UUID userId,
             UUID deviceId,
-            String result,
+            LoginResult result,
             String ip
     ) {
         this.email = email;
@@ -80,11 +81,11 @@ public class LoginAttempt {
         this.deviceId = deviceId;
     }
 
-    public String getResult() {
+    public LoginResult getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(LoginResult result) {
         this.result = result;
     }
 
