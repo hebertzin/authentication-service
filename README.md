@@ -38,7 +38,7 @@ Database model:
 
 ## Current Features (Implemented)
 
-### ✅ Device Management (Create/Find)
+### Device Management (Create/Find)
 
 When a user tries to authenticate, the system resolves the current device:
 
