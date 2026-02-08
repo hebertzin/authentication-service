@@ -7,17 +7,16 @@ import com.hebertzin.security_service.exceptions.ForbiddenException;
 import com.hebertzin.security_service.exceptions.InvalidCredentialException;
 import com.hebertzin.security_service.exceptions.NotFoundException;
 import com.hebertzin.security_service.presentation.AuthenticationRequest;
-import com.hebertzin.security_service.presentation.RegisterLoginAttemptRequest;
+import com.hebertzin.security_service.presentation.LoginAttemptRequest;
+import com.hebertzin.security_service.presentation.LoginResult;
 import com.hebertzin.security_service.presentation.TrustLevel;
 import com.hebertzin.security_service.repository.UserRepository;
 import com.hebertzin.security_service.repository.entities.Device;
-import com.hebertzin.security_service.repository.entities.LoginAttempt;
 import com.hebertzin.security_service.repository.entities.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -51,10 +50,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         boolean isCorrectCredentials = this.passwordEncoder.matches(authenticationRequest.password(), user.get().getPassword());
 
         if (!isCorrectCredentials) {
-            RegisterLoginAttemptRequest loginAttempt = RegisterLoginAttemptRequest.builder()
+            LoginAttemptRequest loginAttempt = LoginAttemptRequest.builder()
                             .email(authenticationRequest.email())
                             .userId(user.get().getId())
-                            .result("FAILURE")
+                            .result(LoginResult.FAILURE)
                             .ip(authenticationRequest.ip())
                             .build();
 
@@ -70,27 +69,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
 
         if (device.getTrustLevel() == TrustLevel.UNTRUSTED) {
-            RegisterLoginAttemptRequest loginAttempt = RegisterLoginAttemptRequest.builder()
+            LoginAttemptRequest loginAttempt = LoginAttemptRequest.builder()
                             .email(authenticationRequest.email())
                             .userId(user.get().getId())
                             .deviceId(null)
-                            .result("FAILURE")
+                            .result(LoginResult.FAILURE)
                             .ip(null)
                             .build();
 
-            this.loginAttempt.registerLoginAttempt(loginAttempt);
+             this.loginAttempt.registerLoginAttempt(loginAttempt);
              throw  new ForbiddenException("OTP required");
         }
 
-        RegisterLoginAttemptRequest loginAttempt = RegisterLoginAttemptRequest.builder()
+        LoginAttemptRequest loginAttempt = LoginAttemptRequest.builder()
                         .email(authenticationRequest.email())
                         .userId(user.get().getId())
                         .deviceId(device.getId())
-                        .result("SUCCESS")
+                        .result(LoginResult.SUCCESS)
                         .ip(device.getIpLast())
                         .build();
 
          this.loginAttempt.registerLoginAttempt(loginAttempt);
+
          return this.tokenProvider.generateToken(user.get().getEmail());
      }
 
