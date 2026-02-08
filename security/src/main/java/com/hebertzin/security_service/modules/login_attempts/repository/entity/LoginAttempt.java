@@ -1,6 +1,6 @@
-package com.hebertzin.security_service.modules.attempts.repository.entity;
+package com.hebertzin.security_service.modules.login_attempts.repository.entity;
 
-import com.hebertzin.security_service.modules.attempts.ports.LoginResult;
+import com.hebertzin.security_service.modules.login_attempts.ports.LoginResult;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;

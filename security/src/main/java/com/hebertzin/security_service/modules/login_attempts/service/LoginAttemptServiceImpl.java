@@ -1,9 +1,9 @@
-package com.hebertzin.security_service.modules.attempts.service;
+package com.hebertzin.security_service.modules.login_attempts.service;
 
-import com.hebertzin.security_service.modules.attempts.ports.LoginAttemptService;
-import com.hebertzin.security_service.modules.attempts.dto.LoginAttemptRequest;
-import com.hebertzin.security_service.modules.attempts.repository.LoginAttemptRepository;
-import com.hebertzin.security_service.modules.attempts.repository.entity.LoginAttempt;
+import com.hebertzin.security_service.modules.login_attempts.ports.LoginAttemptService;
+import com.hebertzin.security_service.modules.login_attempts.dto.LoginAttemptRequest;
+import com.hebertzin.security_service.modules.login_attempts.repository.LoginAttemptRepository;
+import com.hebertzin.security_service.modules.login_attempts.repository.entity.LoginAttempt;
 import org.springframework.stereotype.Service;
 
 @Service

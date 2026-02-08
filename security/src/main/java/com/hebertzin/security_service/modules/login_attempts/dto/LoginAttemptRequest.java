@@ -1,6 +1,6 @@
-package com.hebertzin.security_service.modules.attempts.dto;
+package com.hebertzin.security_service.modules.login_attempts.dto;
 
-import com.hebertzin.security_service.modules.attempts.ports.LoginResult;
+import com.hebertzin.security_service.modules.login_attempts.ports.LoginResult;
 
 import java.util.UUID;
 
