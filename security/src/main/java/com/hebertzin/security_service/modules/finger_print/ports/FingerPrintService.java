@@ -1,4 +1,4 @@
-package com.hebertzin.security_service.modules.fingerprint.ports;
+package com.hebertzin.security_service.modules.finger_print.ports;
 
 public interface FingerPrintService {
     String hmacSha256(String secret, String data);

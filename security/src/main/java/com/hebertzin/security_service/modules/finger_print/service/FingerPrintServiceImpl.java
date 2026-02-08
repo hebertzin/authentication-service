@@ -1,6 +1,6 @@
-package com.hebertzin.security_service.modules.fingerprint.service;
+package com.hebertzin.security_service.modules.finger_print.service;
 
-import com.hebertzin.security_service.modules.fingerprint.ports.FingerPrintService;
+import com.hebertzin.security_service.modules.finger_print.ports.FingerPrintService;
 import com.hebertzin.security_service.exceptions.InternalServerErrorException;
 import org.springframework.stereotype.Service;
 import javax.crypto.Mac;

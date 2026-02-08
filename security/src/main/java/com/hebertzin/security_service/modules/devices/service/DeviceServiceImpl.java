@@ -1,18 +1,18 @@
 package com.hebertzin.security_service.modules.devices.service;
 import com.hebertzin.security_service.modules.devices.ports.DeviceService;
-import com.hebertzin.security_service.modules.fingerprint.ports.FingerPrintService;
+import com.hebertzin.security_service.modules.finger_print.ports.FingerPrintService;
 import com.hebertzin.security_service.exceptions.BadRequestException;
 import com.hebertzin.security_service.modules.devices.ports.TrustLevelDevice;
 import com.hebertzin.security_service.modules.devices.repository.DeviceRepository;
 import com.hebertzin.security_service.modules.devices.repository.entity.Device;
-import com.hebertzin.security_service.modules.fingerprint.service.FingerPrintServiceImpl;
+import com.hebertzin.security_service.modules.finger_print.service.FingerPrintServiceImpl;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
    private final DeviceRepository repo;
-   private  final  FingerPrintService fingerPrintService;
+   private  final FingerPrintService  fingerPrintService;
    Integer MAX_DEVICES_ALLOW = 5;
 
     public DeviceServiceImpl( DeviceRepository repo, FingerPrintServiceImpl fingerPrintService) {

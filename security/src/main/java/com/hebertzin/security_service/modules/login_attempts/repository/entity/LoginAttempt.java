@@ -1,6 +1,6 @@
-package com.hebertzin.security_service.modules.attempts.repository.entity;
+package com.hebertzin.security_service.modules.login_attempts.repository.entity;
 
-import com.hebertzin.security_service.modules.attempts.ports.LoginResult;
+import com.hebertzin.security_service.modules.login_attempts.ports.LoginResult;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
@@ -25,9 +25,6 @@ public class LoginAttempt {
     @Column(nullable = false, length = 20)
     private LoginResult result;
 
-    @Column(length = 45)
-    private String ip;
-
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
@@ -38,14 +35,12 @@ public class LoginAttempt {
             String email,
             UUID userId,
             UUID deviceId,
-            LoginResult result,
-            String ip
+            LoginResult result
     ) {
         this.email = email;
         this.userId = userId;
         this.deviceId = deviceId;
         this.result = result;
-        this.ip = ip;
         this.createdAt = Instant.now();
     }
 
@@ -87,14 +82,6 @@ public class LoginAttempt {
 
     public void setResult(LoginResult result) {
         this.result = result;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
     }
 
     public Instant getCreatedAt() {
