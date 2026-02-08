@@ -36,9 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String authenticate(AuthenticationRequest authenticationRequest) {
         Optional<User> user = this.userRepository.findByEmail(authenticationRequest.email());
 
-        boolean existentUser = this.userRepository.existsByEmail(authenticationRequest.email());
-
-        if (!existentUser) {
+        if (user.isEmpty()) {
             throw new NotFoundException("User not found");
         }
 
