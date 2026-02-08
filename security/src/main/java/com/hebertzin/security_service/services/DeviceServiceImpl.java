@@ -3,10 +3,7 @@ import com.hebertzin.security_service.domain.UserService;
 import com.hebertzin.security_service.presentation.TrustLevel;
 import com.hebertzin.security_service.repository.DeviceRepository;
 import com.hebertzin.security_service.repository.entities.Device;
-import com.hebertzin.security_service.repository.entities.User;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
