@@ -14,7 +14,7 @@ public class DeviceServiceImpl implements DeviceService {
    private  final  FingerPrintService fingerPrintService;
    Integer MAX_DEVICES_ALLOW = 5;
 
-    public DeviceServiceImpl( DeviceRepository repo, FingerprintServiceImpl fingerPrintService) {
+    public DeviceServiceImpl( DeviceRepository repo, FingerPrintServiceImpl fingerPrintService) {
         this.repo = repo;
         this.fingerPrintService = fingerPrintService;
     }
