@@ -1,6 +1,7 @@
 package com.hebertzin.security_service.services;
 
 import com.hebertzin.security_service.domain.FingerPrintService;
+import com.hebertzin.security_service.exceptions.InternalServerErrorException;
 import org.springframework.stereotype.Service;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -11,7 +12,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class FingerprintService implements FingerPrintService {
-
     private static final String SECRET = "some-secret";
 
     public String generate(
@@ -40,7 +40,7 @@ public class FingerprintService implements FingerPrintService {
 
             return HexFormat.of().formatHex(rawHmac);
         } catch (Exception e) {
-            throw new IllegalStateException("Error generating HMAC", e);
+            throw new InternalServerErrorException("Error generating HMAC");
         }
     }
 }

@@ -6,7 +6,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "devices")
 public class Device {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

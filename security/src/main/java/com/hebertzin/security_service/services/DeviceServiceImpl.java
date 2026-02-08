@@ -1,5 +1,6 @@
 package com.hebertzin.security_service.services;
 import com.hebertzin.security_service.domain.FingerPrintService;
+import com.hebertzin.security_service.exceptions.BadRequestException;
 import com.hebertzin.security_service.presentation.TrustLevel;
 import com.hebertzin.security_service.repository.DeviceRepository;
 import com.hebertzin.security_service.repository.entities.Device;
@@ -86,7 +87,7 @@ public class DeviceServiceImpl {
         long totalDevices = repo.countByUserId(userId);
 
         if (totalDevices >= MAX_DEVICES_ALLOW) {
-            throw new IllegalStateException(
+            throw new BadRequestException(
                     "Maximum number of devices reached"
             );
         }

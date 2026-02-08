@@ -1,7 +1,7 @@
 package com.hebertzin.security_service.services;
 import com.hebertzin.security_service.domain.AuthenticationService;
 import com.hebertzin.security_service.domain.TokenProvider;
-import com.hebertzin.security_service.exceptions.InvalidCredentials;
+import com.hebertzin.security_service.exceptions.InvalidCredentialException;
 import com.hebertzin.security_service.exceptions.NotFoundException;
 import com.hebertzin.security_service.repository.UserRepository;
 import com.hebertzin.security_service.repository.entities.User;
@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         boolean isCorrectCredentials = this.passwordEncoder.matches(password, user.get().getPassword());
 
         if (!isCorrectCredentials) {
-            throw  new InvalidCredentials("Credential are invalids");
+            throw  new InvalidCredentialException("Credential are invalids");
         }
 
          return this.tokenProvider.generateToken(user.get().getEmail());
