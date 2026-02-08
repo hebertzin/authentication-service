@@ -1,14 +1,14 @@
 package com.hebertzin.security_service.modules.authentication.service;
 import com.hebertzin.security_service.modules.authentication.ports.AuthenticationService;
 import com.hebertzin.security_service.modules.devices.ports.DeviceService;
-import com.hebertzin.security_service.modules.attempts.ports.LoginAttemptService;
+import com.hebertzin.security_service.modules.login_attempts.ports.LoginAttemptService;
 import com.hebertzin.security_service.infra.tokens.ports.TokenProvider;
 import com.hebertzin.security_service.exceptions.ForbiddenException;
 import com.hebertzin.security_service.exceptions.InvalidCredentialException;
 import com.hebertzin.security_service.exceptions.NotFoundException;
 import com.hebertzin.security_service.modules.authentication.dto.AuthenticationRequest;
-import com.hebertzin.security_service.modules.attempts.dto.LoginAttemptRequest;
-import com.hebertzin.security_service.modules.attempts.ports.LoginResult;
+import com.hebertzin.security_service.modules.login_attempts.dto.LoginAttemptRequest;
+import com.hebertzin.security_service.modules.login_attempts.ports.LoginResult;
 import com.hebertzin.security_service.modules.devices.ports.TrustLevelDevice;
 import com.hebertzin.security_service.modules.users.repository.UserRepository;
 import com.hebertzin.security_service.modules.devices.repository.entity.Device;
@@ -47,21 +47,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new NotFoundException("User not found");
         }
 
-        boolean isCorrectCredentials = this.passwordEncoder.matches(authenticationRequest.password(), user.get().getPassword());
+        boolean isValidCredential = this.isValidCredentials(authenticationRequest.password(), user.get().getPassword());
 
-        if (!isCorrectCredentials) {
+        if (!isValidCredential) {
             LoginAttemptRequest loginAttempt = LoginAttemptRequest.builder()
                             .email(authenticationRequest.email())
                             .userId(user.get().getId())
                             .result(LoginResult.FAILURE)
-                            .ip(authenticationRequest.ip())
                             .build();
 
             this.loginAttempt.registerLoginAttempt(loginAttempt);
             throw  new InvalidCredentialException("Credential are invalids");
         }
 
-       Device device =  this.deviceService.createOrFindDevice(user.get().getId(),
+       Device device = this.deviceService.createOrFindDevice(user.get().getId(),
                 authenticationRequest.deviceType(),
                 authenticationRequest.platform(),
                 authenticationRequest.userAgent(),
@@ -74,7 +73,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                             .userId(user.get().getId())
                             .deviceId(null)
                             .result(LoginResult.FAILURE)
-                            .ip(null)
                             .build();
 
              this.loginAttempt.registerLoginAttempt(loginAttempt);
@@ -86,11 +84,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         .userId(user.get().getId())
                         .deviceId(device.getId())
                         .result(LoginResult.SUCCESS)
-                        .ip(device.getIpLast())
                         .build();
-
          this.loginAttempt.registerLoginAttempt(loginAttempt);
          return this.tokenProvider.generateToken(user.get().getEmail());
      }
 
+    public boolean isValidCredentials(String rawPassword, String hash) {
+        return passwordEncoder.matches(rawPassword, hash);
+    }
 }

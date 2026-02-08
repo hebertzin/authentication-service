@@ -1,6 +1,6 @@
-package com.hebertzin.security_service.modules.attempts.dto;
+package com.hebertzin.security_service.modules.login_attempts.dto;
 
-import com.hebertzin.security_service.modules.attempts.ports.LoginResult;
+import com.hebertzin.security_service.modules.login_attempts.ports.LoginResult;
 
 import java.util.UUID;
 
@@ -8,8 +8,7 @@ public record LoginAttemptRequest(
         String email,
         UUID userId,
         UUID deviceId,
-        LoginResult result,
-        String ip
+        LoginResult result
 ) {
 
     public static Builder builder() {
@@ -21,7 +20,6 @@ public record LoginAttemptRequest(
         private UUID userId;
         private UUID deviceId;
         private LoginResult result;
-        private String ip;
 
         public Builder email(String email) {
             this.email = email;
@@ -43,13 +41,9 @@ public record LoginAttemptRequest(
             return this;
         }
 
-        public Builder ip(String ip) {
-            this.ip = ip;
-            return this;
-        }
 
         public LoginAttemptRequest build() {
-            return new LoginAttemptRequest(email, userId, deviceId, result, ip);
+            return new LoginAttemptRequest(email, userId, deviceId, result);
         }
     }
 }

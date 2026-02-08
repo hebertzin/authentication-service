@@ -1,62 +1,135 @@
-## Fraud Detection Login Attempts System
-### Overview
+# Fraud Detection Login Attempts System
 
-This project was created with the goal of studying and applying core Java (Spring) concepts, event-driven architecture, and fraud detection mechanisms in a realistic backend system.
-The system simulates a login attempts pipeline, where each authentication attempt is processed, analyzed, and evaluated for potential fraudulent behavior using events, caching, and asynchronous processing.
+## Overview
 
-It is designed as a learning-oriented but production-inspired architecture, focusing on scalability, decoupling, and observability.
+This project was created to study and apply core Java (Spring Boot) concepts, event-driven architecture, and fraud detection mechanisms in a realistic backend system.
+
+It simulates an authentication pipeline where each login attempt can be processed, analyzed, and evaluated for potential fraudulent behavior using device recognition, trust levels, and (future) asynchronous event processing.
+
+Although learning-oriented, the architecture and design decisions are production-inspired, focusing on scalability, decoupling, and observability.
+
+---
 
 ## Goals of the Project
 
 - Practice Java & Spring Boot in a real-world scenario
-
 - Apply Event-Driven Architecture concepts
-
 - Model and process fraud-related events
-
 - Understand idempotency, retries, and async processing
-
 - Use cache and messaging systems to improve performance
-
 - Implement observability using metrics
+
+---
 
 ## Core Concepts Covered
 
-- Event-driven communication
+- Device recognition & device trust model
+- Deterministic fingerprint generation (HMAC-SHA256)
+- Trust-based login foundation (UNTRUSTED/TRUSTED/BLOCKED concept)
+- Basic anti-abuse controls (device limit per user)
+- Foundations for event-driven communication (planned next)
+- Distributed system design fundamentals
 
-- Asynchronous processing
+---
 
-- Fraud detection rules
+## System Modeling
 
-- Rate limiting and login attempt analysis
+### Database Model
 
-Distributed system design fundamentals
+The database schema was designed to support authentication attempts, device tracking, and fraud analysis.
 
-- System Modeling
-- Database Model
+Database model:
+- https://dbdiagram.io/d/698790a8bd82f5fce2fbad33
 
-The database schema was designed to support authentication events, login attempts, and fraud analysis.
+---
 
-View the database model:
-https://dbdiagram.io/d/698790a8bd82f5fce2fbad33
+## Current Features (Implemented)
+
+### ✅ Device Management (Create/Find)
+
+When a user tries to authenticate, the system resolves the current device:
+
+- Generates a deterministic `fingerprintHash` based on:
+    - `userAgent`
+    - `platform`
+    - `deviceType`
+- Looks up an existing device by `(userId, fingerprintHash)`
+- If found:
+    - updates metadata (e.g. last IP, platform, user agent)
+- If not found:
+    - creates a new device with default trust level `UNTRUSTED`
+
+This enables the system to identify returning devices and maintain device history for fraud analysis.
+
+### Device Trust Level (foundation)
+
+Devices have a trust level field:
+
+- `UNTRUSTED` (default for newly created devices)
+
+This project currently stores the trust state for each device, enabling future steps like:
+- allowing login only from trusted devices
+- enforcing step-up verification (OTP/MFA) for untrusted devices
+
+###  Device Limit Per User (Anti-abuse)
+
+To prevent uncontrolled device creation (which can be abused to inflate state or bypass policies), the system enforces:
+
+- `MAX_DEVICES_ALLOW = 5`
+
+If the user exceeds the limit, a `BadRequestException` is thrown.
+
+---
+
+## Fingerprint: How Device Recognition Works
+
+This project implements a deterministic fingerprint mechanism:
+
+### What is a fingerprint?
+
+A fingerprint is a stable identifier generated from device signals. The goal is to answer:
+
+> "Is this the same device I’ve seen before?"
+
+### How it is generated in this project
+
+The system normalizes the main device attributes:
+
+- trimming whitespace
+- converting to lowercase
+- joining the parts with `|`
+
+Then it generates a fingerprint hash using **HMAC-SHA256**, which is a keyed hash:
+
+- fingerprint = `HMAC_SHA256(SECRET, normalized_data)`
+
+This approach is useful because:
+
+- it is deterministic (same input → same output)
+- it does not expose raw device data in the database
+- it is harder to spoof than plain hashing without a secret
+
+### Important note about the SECRET
+
+Today the secret is hardcoded:
+
+private static final String SECRET = "some-secret";
 
 ## Macro Architecture
 
 The macro architecture follows an event-oriented approach, where login attempts generate events that are processed asynchronously by different services and components.
 
-Architecture Highlights
+- Architecture Highlights
 
-Services are loosely coupled
+- Services are loosely coupled
 
-Events are propagated through a message broker
+- Events are propagated through a message broker
 
-Fraud analysis happens asynchronously
+- Fraud analysis happens asynchronously
 
-Caching is used to reduce database load
+- Caching is used to reduce database load
 
-Metrics are exposed for monitoring and analysis
-
-You view an image below<img width="1782" height="891" alt="Login attempts system" src="https://github.com/user-attachments/assets/1a464161-87e1-435e-90c1-4aa13b49605f" />
+- Metrics are exposed for monitoring and analysis
 
 ## Technologies Used
 
@@ -81,3 +154,21 @@ Backend & Infrastructure
 - Fraud-related indicators can be tracked over time
 
 - Enables future integration with dashboards (e.g., Grafana)
+
+Roadmap (Next Features)
+
+
+
+- [ ] Step-up authentication (OTP / email) for UNTRUSTED devices
+
+- [ ] Promote device to TRUSTED after OTP verification
+
+- [ ] Event publishing for login attempts (RabbitMQ)
+
+- [ ] Fraud rules engine (rate limit, impossible travel, brute force signals)
+
+- [ ] Redis counters for rate limiting and high-frequency checks
+
+- [ ] Idempotency keys for event consumers
+
+- [ ] Structured security events table (security_events)
