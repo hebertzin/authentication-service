@@ -18,7 +18,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/authentication", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> auhtenticate(@RequestBody AuthenticationRequest authRequest) {
+    public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest authRequest) {
         String auth = this.authenticationService.authenticate(authRequest);
         return ResponseEntity.status(HttpStatus.OK).body(auth);
     }
