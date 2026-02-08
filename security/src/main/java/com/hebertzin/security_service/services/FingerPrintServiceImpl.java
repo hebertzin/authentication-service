@@ -11,7 +11,7 @@ import java.util.HexFormat;
 import java.util.stream.Collectors;
 
 @Service
-public class FingerprintServiceImpl implements FingerPrintService {
+public class FingerPrintServiceImpl implements FingerPrintService {
     private static final String SECRET = "some-secret";
 
     public String generate(
