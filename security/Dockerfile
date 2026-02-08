@@ -7,7 +7,7 @@ COPY build.gradle settings.gradle ./
 RUN chmod +x gradlew
 RUN ./gradlew dependencies --no-daemon
 
-COPY src
+COPY src/main
 
 RUN ./gradlew clean bootJar --no-daemon
 
