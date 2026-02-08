@@ -1,8 +1,8 @@
 package com.hebertzin.security_service.presentation.controllers;
 
-import com.hebertzin.security_service.domain.UserService;
-import com.hebertzin.security_service.presentation.CreateUserRequest;
-import com.hebertzin.security_service.repository.entities.User;
+import com.hebertzin.security_service.modules.users.ports.UserService;
+import com.hebertzin.security_service.modules.users.dto.CreateUserRequest;
+import com.hebertzin.security_service.modules.users.repository.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
