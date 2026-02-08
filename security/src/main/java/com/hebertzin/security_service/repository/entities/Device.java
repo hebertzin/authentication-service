@@ -68,6 +68,10 @@ public class Device {
         return fingerPrint;
     }
 
+    public TrustLevel getTrustLevel() {
+        return  this.trust_level;
+    }
+
     public void setFingerPrint(String fingerPrint) {
         this.fingerPrint = fingerPrint;
     }
