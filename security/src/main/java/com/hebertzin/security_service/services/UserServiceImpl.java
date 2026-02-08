@@ -7,9 +7,11 @@ import com.hebertzin.security_service.repository.entities.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UserServiceImpl implements UserService {
-
     private final UserRepository repo;
     private final PasswordEncoder passwordEncoder;
 
@@ -30,5 +32,10 @@ public class UserServiceImpl implements UserService {
          user.setPassword(passwordEncoder.encode(user.getPassword()));
 
          return this.repo.save(user);
+    }
+
+
+    public Optional<User> findById(UUID userId) {
+       return this.repo.findById(userId);
     }
 }
