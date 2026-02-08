@@ -6,7 +6,7 @@ import com.hebertzin.security_service.infra.tokens.ports.TokenProvider;
 import com.hebertzin.security_service.exceptions.ForbiddenException;
 import com.hebertzin.security_service.exceptions.InvalidCredentialException;
 import com.hebertzin.security_service.exceptions.NotFoundException;
-import com.hebertzin.security_service.modules.authentication.AuthenticationRequest;
+import com.hebertzin.security_service.modules.authentication.dto.AuthenticationRequest;
 import com.hebertzin.security_service.modules.attempts.dto.LoginAttemptRequest;
 import com.hebertzin.security_service.modules.attempts.ports.LoginResult;
 import com.hebertzin.security_service.modules.devices.ports.TrustLevelDevice;

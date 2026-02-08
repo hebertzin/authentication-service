@@ -1,4 +1,4 @@
-package com.hebertzin.security_service.modules.authentication;
+package com.hebertzin.security_service.modules.authentication.dto;
 
 public record AuthenticationRequest(
         String email,
