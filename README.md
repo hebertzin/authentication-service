@@ -1,4 +1,4 @@
-# Fraud Detection Login Attempts System
+# Authentication & Login Attempts System
 
 ## Overview
 
@@ -13,12 +13,6 @@ Although learning-oriented, the architecture and design decisions are production
 ## Goals of the Project
 
 - Practice Java & Spring Boot in a real-world scenario
-- Apply Event-Driven Architecture concepts
-- Model and process fraud-related events
-- Understand idempotency, retries, and async processing
-- Use cache and messaging systems to improve performance
-- Implement observability using metrics
-
 ---
 
 ## Core Concepts Covered
@@ -28,8 +22,7 @@ Although learning-oriented, the architecture and design decisions are production
 - Trust-based login foundation (UNTRUSTED/TRUSTED/BLOCKED concept)
 - Basic anti-abuse controls (device limit per user)
 - Foundations for event-driven communication (planned next)
-- Distributed system design fundamentals
-
+- 
 ---
 
 ## System Modeling
@@ -154,21 +147,3 @@ Backend & Infrastructure
 - Fraud-related indicators can be tracked over time
 
 - Enables future integration with dashboards (e.g., Grafana)
-
-Roadmap (Next Features)
-
-
-
-- [ ] Step-up authentication (OTP / email) for UNTRUSTED devices
-
-- [ ] Promote device to TRUSTED after OTP verification
-
-- [ ] Event publishing for login attempts (RabbitMQ)
-
-- [ ] Fraud rules engine (rate limit, impossible travel, brute force signals)
-
-- [ ] Redis counters for rate limiting and high-frequency checks
-
-- [ ] Idempotency keys for event consumers
-
-- [ ] Structured security events table (security_events)
