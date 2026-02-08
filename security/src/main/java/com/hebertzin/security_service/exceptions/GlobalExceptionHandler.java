@@ -32,6 +32,17 @@ public class GlobalExceptionHandler {
         );
     }
 
+
+    @ExceptionHandler(ForbiddenException.class)
+    ResponseEntity<ApiError> handleForbiddenException(ForbiddenException ex, HttpServletRequest request){
+        return buildError(
+                HttpStatus.FORBIDDEN,
+                ex.getMessage(),
+                ex.getCause().toString(),
+                request.getRequestURI()
+        );
+    }
+
     @ExceptionHandler(BadRequestException.class)
     ResponseEntity<ApiError> handleBadRequestException(BadRequestException ex, HttpServletRequest request){
         return buildError(
