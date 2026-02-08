@@ -1,4 +1,5 @@
 package com.hebertzin.security_service.modules.authentication.service;
+import com.hebertzin.security_service.modules.authentication.dto.TokenResponse;
 import com.hebertzin.security_service.modules.authentication.ports.AuthenticationService;
 import com.hebertzin.security_service.modules.devices.ports.DeviceService;
 import com.hebertzin.security_service.modules.login_attempts.ports.LoginAttemptService;
@@ -40,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.loginAttempt = loginAttempt;
     }
 
-    public String authenticate(AuthenticationRequest authenticationRequest) {
+    public TokenResponse authenticate(AuthenticationRequest authenticationRequest) {
         Optional<User> user = this.userRepository.findByEmail(authenticationRequest.email());
 
         if (user.isEmpty()) {

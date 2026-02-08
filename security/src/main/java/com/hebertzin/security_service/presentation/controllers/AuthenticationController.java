@@ -1,6 +1,7 @@
 package com.hebertzin.security_service.presentation.controllers;
 
 import com.hebertzin.security_service.modules.authentication.dto.AuthenticationRequest;
+import com.hebertzin.security_service.modules.authentication.dto.TokenResponse;
 import com.hebertzin.security_service.modules.authentication.ports.AuthenticationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,8 +19,8 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/authentication", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest authRequest) {
-        String auth = this.authenticationService.authenticate(authRequest);
+    public ResponseEntity<TokenResponse> authenticate(@RequestBody AuthenticationRequest authRequest) {
+        TokenResponse auth = this.authenticationService.authenticate(authRequest);
         return ResponseEntity.status(HttpStatus.OK).body(auth);
     }
 }
