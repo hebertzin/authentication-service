@@ -1,4 +1,5 @@
 package com.hebertzin.security_service.repository.entities;
+import com.hebertzin.security_service.presentation.TrustLevel;
 import jakarta.persistence.*;
 import java.util.UUID;
 
@@ -25,27 +26,17 @@ public class Device {
     @Column(name = "ip_last", nullable = false)
     private String ipLast;
 
+    @Column(name = "trust_level", nullable = false)
+    private TrustLevel trust_level;
+
+    @Column(name = "fingerprint", nullable = false)
+    private String fingerPrint;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    protected Device() {
-    }
-
-    public Device(
-            String deviceType,
-            String platform,
-            String userAgent,
-            String ipFirst,
-            String ipLast,
-            User user
-    ) {
-        this.deviceType = deviceType;
-        this.platform = platform;
-        this.userAgent = userAgent;
-        this.ipFirst = ipFirst;
-        this.ipLast = ipLast;
-        this.user = user;
+    public Device() {
     }
 
     public UUID getId() { return id; }
@@ -74,7 +65,54 @@ public class Device {
         return ipLast;
     }
 
+    public String getFingerPrint() {
+        return fingerPrint;
+    }
+
+    public void setFingerPrint(String fingerPrint) {
+        this.fingerPrint = fingerPrint;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
     public void setLastIp(String ipLast) {
         this.ipLast = ipLast;
+    }
+
+    public void setFirstIp(String ipFirst) {
+        this.ipFirst = ipFirst;
+    }
+
+    public void setTrustLevel(TrustLevel trustLevel) {
+        this.trust_level = trustLevel;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public Device(
+            String deviceType,
+            String platform,
+            String userAgent,
+            String ipFirst,
+            String ipLast,
+            TrustLevel trustLevel,
+            User user
+    ) {
+        this.deviceType = deviceType;
+        this.platform = platform;
+        this.userAgent = userAgent;
+        this.ipFirst = ipFirst;
+        this.ipLast = ipLast;
+        this.trust_level = trustLevel;
+        this.user = user;
+
     }
 }
