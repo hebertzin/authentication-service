@@ -32,6 +32,26 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    ResponseEntity<ApiError> handleBadRequestException(BadRequestException ex, HttpServletRequest request){
+        return buildError(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                ex.getCause().toString(),
+                request.getRequestURI()
+        );
+    }
+
+    @ExceptionHandler(InternalServerErrorException.class)
+    ResponseEntity<ApiError> handleInternalServerErrorException(InternalServerErrorException ex, HttpServletRequest request){
+        return buildError(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                ex.getMessage(),
+                ex.getCause().toString(),
+                request.getRequestURI()
+        );
+    }
+
 
     private ResponseEntity<ApiError> buildError(HttpStatus status,
                                                 String title,
