@@ -1,6 +1,7 @@
 package com.hebertzin.security_service.infra.tokens;
 
 import com.hebertzin.security_service.infra.tokens.ports.TokenProvider;
+import com.hebertzin.security_service.modules.authentication.dto.TokenResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -31,16 +32,18 @@ public class TokenProviderImpl implements TokenProvider {
     }
 
 
-    public String generateToken(String subject) {
+    public TokenResponse generateToken(String subject) {
         Instant now = Instant.now();
         Instant exp = now.plus(expirationInMinutes, ChronoUnit.MINUTES);
-        return  Jwts.builder()
+        String tokenBuilder = Jwts.builder()
                 .subject(subject)
                 .issuer(issuer)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(exp))
                 .signWith(secretKey)
                 .compact();
+
+        return new TokenResponse(tokenBuilder);
     }
 
 
