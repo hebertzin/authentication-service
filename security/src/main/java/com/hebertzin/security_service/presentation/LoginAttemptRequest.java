@@ -2,11 +2,11 @@ package com.hebertzin.security_service.presentation;
 
 import java.util.UUID;
 
-public record RegisterLoginAttemptRequest(
+public record LoginAttemptRequest(
         String email,
         UUID userId,
         UUID deviceId,
-        String result,
+        LoginResult result,
         String ip
 ) {
 
@@ -18,7 +18,7 @@ public record RegisterLoginAttemptRequest(
         private String email;
         private UUID userId;
         private UUID deviceId;
-        private String result;
+        private LoginResult result;
         private String ip;
 
         public Builder email(String email) {
@@ -36,7 +36,7 @@ public record RegisterLoginAttemptRequest(
             return this;
         }
 
-        public Builder result(String result) {
+        public Builder result(LoginResult result) {
             this.result = result;
             return this;
         }
@@ -46,8 +46,8 @@ public record RegisterLoginAttemptRequest(
             return this;
         }
 
-        public RegisterLoginAttemptRequest build() {
-            return new RegisterLoginAttemptRequest(email, userId, deviceId, result, ip);
+        public LoginAttemptRequest build() {
+            return new LoginAttemptRequest(email, userId, deviceId, result, ip);
         }
     }
 }
