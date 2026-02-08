@@ -3,7 +3,6 @@ package com.hebertzin.security_service.presentation.controllers;
 import com.hebertzin.security_service.domain.UserService;
 import com.hebertzin.security_service.presentation.CreateUserRequest;
 import com.hebertzin.security_service.repository.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

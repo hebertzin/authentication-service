@@ -6,7 +6,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "devices")
 public class Device {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -67,6 +66,10 @@ public class Device {
 
     public String getFingerPrint() {
         return fingerPrint;
+    }
+
+    public TrustLevel getTrustLevel() {
+        return  this.trust_level;
     }
 
     public void setFingerPrint(String fingerPrint) {
