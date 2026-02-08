@@ -134,12 +134,6 @@ Backend & Infrastructure
 
 - PostgreSQL – Relational database for persistent data
 
-- Redis – In-memory cache for fast access and rate-limiting scenarios
-
-- RabbitMQ – Message broker for event-driven communication
-
-- Prometheus – Metrics collection and monitoring
-
 ## Observability & Monitoring
 
 - Application metrics are exposed for Prometheus scraping
