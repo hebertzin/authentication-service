@@ -27,11 +27,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private  final DeviceService deviceService;
     private  final LoginAttemptService loginAttempt;
 
-    public AuthenticationServiceImpl(UserRepository userRepository,
-                                     PasswordEncoder passwordEncoder,
-                                     TokenProvider tokenProvider,
-                                     DeviceService deviceService,
-                                     LoginAttemptService loginAttempt
+    public AuthenticationServiceImpl(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            TokenProvider tokenProvider,
+            DeviceService deviceService,
+            LoginAttemptService loginAttempt
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -50,11 +51,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         boolean isCorrectCredentials = this.passwordEncoder.matches(authenticationRequest.password(), user.get().getPassword());
 
         if (!isCorrectCredentials) {
-            RegisterLoginAttemptRequest loginAttempt =
-                    RegisterLoginAttemptRequest.builder()
+            RegisterLoginAttemptRequest loginAttempt = RegisterLoginAttemptRequest.builder()
                             .email(authenticationRequest.email())
                             .userId(user.get().getId())
-                            .deviceId(null)
                             .result("FAILURE")
                             .ip(authenticationRequest.ip())
                             .build();
@@ -71,8 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
 
         if (device.getTrustLevel() == TrustLevel.UNTRUSTED) {
-            RegisterLoginAttemptRequest loginAttempt =
-                    RegisterLoginAttemptRequest.builder()
+            RegisterLoginAttemptRequest loginAttempt = RegisterLoginAttemptRequest.builder()
                             .email(authenticationRequest.email())
                             .userId(user.get().getId())
                             .deviceId(null)
@@ -84,9 +82,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
              throw  new ForbiddenException("OTP required");
         }
 
-
-        RegisterLoginAttemptRequest loginAttempt =
-                RegisterLoginAttemptRequest.builder()
+        RegisterLoginAttemptRequest loginAttempt = RegisterLoginAttemptRequest.builder()
                         .email(authenticationRequest.email())
                         .userId(user.get().getId())
                         .deviceId(device.getId())
