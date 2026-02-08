@@ -4,4 +4,5 @@ import com.hebertzin.security_service.modules.authentication.dto.AuthenticationR
 
 public interface AuthenticationService {
     String authenticate(AuthenticationRequest authenticationRequest);
+    boolean isValidCredentials(String rawPassword, String hash);
 }

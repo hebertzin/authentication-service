@@ -19,8 +19,7 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
                loginAttemptRequest.email(),
                loginAttemptRequest.userId(),
                loginAttemptRequest.deviceId(),
-               loginAttemptRequest.result(),
-               loginAttemptRequest.ip()
+               loginAttemptRequest.result()
         );
 
        return this.repo.save(login);
