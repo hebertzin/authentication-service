@@ -22,7 +22,6 @@ Although learning-oriented, the architecture and design decisions are production
 - Trust-based login foundation (UNTRUSTED/TRUSTED/BLOCKED concept)
 - Basic anti-abuse controls (device limit per user)
 - Foundations for event-driven communication (planned next)
-- 
 ---
 
 ## System Modeling
